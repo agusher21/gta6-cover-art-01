@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Midnight Vice — GTA 6 Cover Maker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+/* Font fallback: Google fonts first, then strong CSS-only fallback */
+@import url('https://fonts.googleapis.com/css2?family=Anton:wght@400;700&family=Archivo+Black:wght@400;700&family=Pacifico:wght@400;700&family=Dancing+Script:wght@400;700');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:#050510; --bg-sub:#0a0a18; --fg:#e8e6e3; --muted:#6a6a7a;
+  --indigo:#2a0e4f; --teal:#00d4aa; --magenta:#c8003e;
+  --pink:#ff2d6b; --cyan:#00f7ff; --amber:#ffd300;
+  --neon-indigo:#3d1a6e; --neon-teal:#00e5c4; --neon-pink:#ff175a;
+}
+
+body { font-family: 'Archivo Black', sans-serif; background: var(--bg); color: var(--fg); min-height: 100vh; }
+
+/* --- Header / top strip --- */
+.header { position: sticky; top: 0; background: linear-gradient(180deg, var(--bg-sub), var(--bg)); z-index: 50; }
+.top-strip { display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; height: 56px; border-bottom: 1px solid #1a0f2a; }
+.top-strip .logo { font-family: 'Anton', sans-serif; font-size: 20px; letter-spacing: 1px; color: var(--cyan); }
+.top-strip .stars { display: flex; gap: 4px; color: var(--amber); }
+.top-strip .stars .star { width: 12px; height: 12px; background: var(--amber); clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+.top-strip .wanted { font-family: 'Anton', sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--magenta); background: var(--pink); padding: 2px 6px; border-radius: 3px; }
+.top-strip .badge { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--fg); background: var(--indigo); padding: 2px 6px; border-radius: 3px; margin-left: 8px; }
+
+/* --- Main app shell --- */
+.main { display: grid; grid-template-rows: auto 1fr auto; min-height: calc(100vh - 56px); width: 100%; max-width: 1920px; margin: 0 auto; overflow: hidden; }
+
+/* --- Hero panels --- */
+.panels { display: grid; gap: 8px; padding: 12px 20px; background: var(--bg-sub); overflow: auto; }
+@media (min-width: 480px) { .panels { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); } }
+@media (min-width: 768px) { .panels { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); } }
+
+.panel { position: relative; border-radius: 8px; overflow: hidden; background: #000; aspect-ratio: 16/9; }
+.panel.hero { grid-row: 1 / -1; background: var(--indigo); }
+.panel.hero .popout { position: absolute; top: -8px; left: -8px; right: -8px; bottom: -8px; border-radius: 12px; pointer-events: none; background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent); z-index: 0; }
+.panel .photo { width: 100%; height: 100%; object-fit: cover; display: block; }
+.panel .grade-select { position: absolute; bottom: 6px; left: 6px; right: 6px; }
+.panel .grade-select select { width: 100%; background: rgba(0,0,0,0.6); border: 1px solid var(--teal); color: var(--fg); padding: 6px; border-radius: 4px; font-family: 'Anton', sans-serif; font-size: 12px; }
+.panel .tag { position: absolute; bottom: 6px; right: 6px; background: rgba(0,0,0,0.7); border: 1px solid var(--cyan); color: var(--cyan); padding: 4px 8px; border-radius: 4px; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; }
+.panel .tag .loc { color: var(--teal); }
+.panel .tag .time { color: var(--pink); }
+.panel .tag .label { color: var(--muted); font-size: 9px; }
+
+/* --- Controls --- */
+.controls { padding: 12px 20px; background: var(--bg-sub); display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.controls .title { font-family: 'Anton', sans-serif; font-size: 18px; letter-spacing: 1px; }
+.controls input, .controls select { font-family: 'Anton', sans-serif; background: rgba(0,0,0,0.6); border: 1px solid var(--teal); color: var(--fg); padding: 6px 10px; font-size: 14px; }
+.controls .zoom { width: 100px; }
+.controls .layout { min-width: 140px; }
+.controls .export { flex: 1; min-width: 140px; }
+.controls button { font-family: inherit; }
+
+/* --- Subtitle / tagline --- */
+.subtitle-area { padding: 12px 20px; background: var(--bg-sub); border-top: 1px solid #1a0f2a; border-bottom: 1px solid #1a0f2a; }
+.subtitle-area .section { display: flex; gap: 24px; align-items: baseline; }
+.subtitle-area .label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.subtitle-area .input { flex: 1; min-width: 200px; }
+.subtitle-area .tagline { font-family: 'Pacifico', cursive; color: var(--pink); font-size: 14px; text-transform: none; letter-spacing: 0; }
+
+/* --- Role tags panel --- */
+.role-tags { padding: 12px 20px; background: var(--bg-sub); overflow: auto; }
+.role-tags .hint { font-size: 12px; color: var(--muted); }
+
+/* --- Footer / billing --- */
+.footer { padding: 12px 20px; background: linear-gradient(180deg, var(--bg), var(--bg-sub)); border-top: 1px solid #1a0f2a; display: flex; justify-content: space-between; align-items: center; }
+.footer .billing { font-size: 11px; color: var(--muted); letter-spacing: 1px; }
+.footer .seal { display: flex; align-items: center; gap: 8px; }
+.footer .seal .text { font-family: 'Anton', sans-serif; color: var(--amber); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+.footer .seal .gold { color: var(--amber); filter: drop-shadow(0 0 3px rgba(255,215,0,0.5)); }
+
+/* --- Layout buttons --- */
+.layout-btns { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.layout-btn { font-size: 11px; padding: 6px 10px; background: rgba(0,0,0,0.6); border: 1px solid var(--teal); color: var(--fg); text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border-radius: 4px; }
+
+/* --- Photo upload --- */
+.upload { border: 2px dashed var(--teal); border-radius: 8px; padding: 20px; text-align: center; color: var(--muted); cursor: pointer; transition: background 0.2s; }
+.upload:hover { background: rgba(0,212,170,0.1); }
+.upload input { display: none; }
+
+/* --- Drag hint --- */
+.drag-hint { margin-top: 8px; font-size: 12px; color: var(--muted); }
+
+/* --- Export --- */
+.export-btn { width: 100%; padding: 10px; background: var(--cyan); color: var(--bg); font-family: 'Anton', sans-serif; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; border: none; cursor: pointer; }
+.export-btn:hover { background: var(--neon-teal); }
+
+/* --- Share link --- */
+.share { font-size: 12px; color: var(--muted); margin-top: 8px; }
+.share a { color: var(--cyan); text-decoration: underline; }
+
+/* --- Grade preview tiny --- */
+.grade-peek { display: flex; gap: 4px; flex-wrap: wrap; }
+.grade-peek span { width: 24px; height: 24px; border-radius: 4px; border: 1px solid var(--muted); flex-shrink: 0; }
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="top-strip">
+    <div class="logo">MIDNIGHT VICE</div>
+    <div class="stars">
+      <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
+    </div>
+    <div class="wanted">WANTED</div>
+    <div class="badge">★★★★★</div>
+  </div>
+</header>
+
+<main class="main">
+  <section class="panels" id="panels">
+    <!-- Panels filled by JS; starter: 2 starter scene panels + 5 blank/uploader panels -->
+  </section>
+
+  <section class="controls">
+    <div>
+      <div class="title">Title</div>
+      <input id="title" type="text" value="MIDNIGHT VICE" maxlength="40">
+    </div>
+    <div>
+      <div class="title">Subtitle</div>
+      <input id="subtitle" type="text" value="After the Tide" maxlength="40">
+    </div>
+    <div>
+      <div class="title">Tagline</div>
+      <input id="tagline" type="text" value="SEVEN LIVES · ONE HARBOR · NO WAY BACK" maxlength="60">
+    </div>
+    <div class="layout-btns">
+      <button class="layout-btn" data-layout="hero-center">Hero-Center 7</button>
+      <button class="layout-btn" data-layout="hero-left">Hero-Left Pop</button>
+      <button class="layout-btn" data-layout="hero-right">Hero-Right Pop</button>
+      <button class="layout-btn" data-layout="grid-6">Grid 6</button>
+    </div>
+    <button class="export-btn" id="exportBtn">Export all (3 sizes)</button>
+  </section>
+
+  <section class="subtitle-area">
+    <div class="section">
+      <div class="label">Quote</div>
+      <input id="quote" type="text" maxlength="80" placeholder='e.g. "Tonight, the city bleeds..."'>
+    </div>
+    <div class="section">
+      <div class="label">Role Tags</div>
+      <small class="hint">Click a tag to edit. Format: NAME — LOCATION · TIME · NOTE</small>
+    </div>
+  </section>
+
+  <section class="role-tags" id="roleTags">
+    <!-- Filled by JS -->
+  </section>
+
+  <section class="footer">
+    <div class="billing" id="billing">ORIGINAL COVER ART — AI GENERATED</div>
+    <div class="seal">
+      <span class="text">ORIGINAL COVER ART</span>
+      <span class="gold">★★★</span>
+    </div>
+  </section>
+</main>
+
+<section class="share" id="share">
+  Link: <a id="shareLink" target="_blank"></a>
+</section>
+
+<!-- Photo upload -->
+<div class="upload" id="upload">
+  <input type="file" id="photoInput" accept="image/*" multiple>
+  <div>Upload 1-7 photos</div>
+  <div class="drag-hint">or drag & drop</div>
+</div>
+
+<!-- Grade preview -->
+<div class="grade-peek" id="gradePeek">
+  <span style="background: var(--indigo); filter: var(--grade-Midnight)"></span>
+  <span style="background: var(--teal); filter: var(--grade-Neon-Rain)"></span>
+  <span style="background: var(--pink); filter: var(--grade-Sunset)"></span>
+  <span style="background: #222; filter: var(--grade-Noir)"></span>
+  <span style="background: var(--amber); filter: var(--grade-Vice-Gold)"></span>
+  <span style="background: #333; filter: var(--grade-Mono-Chrome)"></span>
+</div>
+
+<!-- Zoom & fit controls -->
+<div class="controls" style="position: fixed; top: 72px; right: 20px; background: var(--bg-sub); padding: 8px 12px; border-radius: 8; gap: 8; display: none;" id="zoomControls">
+  <div>Zoom: <span id="zoomValue">100%</span></div>
+  <input type="range" id="zoomSlider" min="50" max="200" value="100">
+  <button id="fitBtn">Fit</button>
+  <button id="fillBtn">Fill</button>
+</div>
+</body>
+<script type="module" src="./src/main.js"></script>
+</html>

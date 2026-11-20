@@ -1,0 +1,88 @@
+/* Midnight Vice neon-noir cover art maker styles */
+:root {
+  --bg:#050510; --bg-sub:#0a0a18; --fg:#e8e6e3; --muted:#6a6a7a;
+  --indigo:#2a0e4f; --teal:#00d4aa; --magenta:#c8003e;
+  --pink:#ff2d6b; --cyan:#00f7ff; --amber:#ffd300;
+}
+
+/* Page */
+body { font-family: 'Archivo Black', sans-serif; background: var(--bg); color: var(--fg); min-height: 100vh; margin: 0; }
+
+/* Header / top strip */
+.Header { position: sticky; top: 0; background: linear-gradient(180deg, var(--bg-sub), var(--bg)); z-index: 50; }
+.TopStrip { display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; height: 56px; border-bottom: 1px solid #1a0f2a; }
+.TopStrip .Logo { font-family: 'Anton', sans-serif; font-size: 20px; letter-spacing: 1px; color: var(--cyan); }
+.TopStrip .Stars { display: flex; gap: 4px; color: var(--amber); }
+.TopStrip .Stars .Star { width: 12px; height: 12px; background: var(--amber); clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+.TopStrip .Wanted { font-family: 'Anton', sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--magenta); background: var(--pink); padding: 2px 6px; border-radius: 3px; }
+.TopStrip .Badge { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--fg); background: var(--indigo); padding: 2px 6px; border-radius: 3px; margin-left: 8px; }
+
+/* Main shell */
+.Main { display: grid; grid-template-rows: auto 1fr auto; min-height: calc(100vh - 56px); width: 100%; max-width: 1920px; margin: 0 auto; overflow: hidden; }
+
+/* Panels */
+.Panels { display: grid; gap: 8px; padding: 12px 20px; background: var(--bg-sub); overflow: auto; }
+@media (min-width: 480px) { .Panels { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); } }
+@media (min-width: 768px) { .Panels { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); } }
+
+.Panel { position: relative; border-radius: 8px; overflow: hidden; background: #000; aspect-ratio: 16/9; }
+.Panel.Hero { grid-row: 1 / -1; background: var(--indigo); }
+.Panel.Hero .Popout { position: absolute; top: -8px; left: -8px; right: -8px; bottom: -8px; border-radius: 12px; pointer-events: none; background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent); z-index: 0; }
+.Panel .Photo { width: 100%; height: 100%; object-fit: cover; display: block; }
+.Panel .GradeSelect { position: absolute; bottom: 6px; left: 6px; right: 6px; }
+.Panel .GradeSelect select { width: 100%; background: rgba(0,0,0,0.6); border: 1px solid var(--teal); color: var(--fg); padding: 6px; border-radius: 4px; font-family: 'Anton', sans-serif; font-size: 12px; }
+.Panel .Tag { position: absolute; bottom: 6px; right: 6px; background: rgba(0,0,0,0.7); border: 1px solid var(--cyan); color: var(--cyan); padding: 4px 8px; border-radius: 4px; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; white-space: nowrap; }
+.Panel .Tag .Loc { color: var(--teal); }
+.Panel .Tag .Time { color: var(--pink); }
+.Panel .Tag .Label { color: var(--muted); font-size: 9px; }
+
+/* Controls */
+.Controls { padding: 12px 20px; background: var(--bg-sub); display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.Controls .Title { font-family: 'Anton', sans-serif; font-size: 18px; letter-spacing: 1px; }
+.Controls input, .Controls select { font-family: 'Anton', sans-serif; background: rgba(0,0,0,0.6); border: 1px solid var(--teal); color: var(--fg); padding: 6px 10px; font-size: 14px; }
+.Controls .Zoom { width: 100px; }
+.Controls .Layout { min-width: 140px; }
+.Controls .Export { flex: 1; min-width: 140px; }
+.Controls button { font-family: inherit; }
+
+/* Subtitle / tagline area */
+.SubtitleArea { padding: 12px 20px; background: var(--bg-sub); border-top: 1px solid #1a0f2a; border-bottom: 1px solid #1a0f2a; }
+.SubtitleArea .Section { display: flex; gap: 24px; align-items: baseline; }
+.SubtitleArea .Label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.SubtitleArea .Input { flex: 1; min-width: 200px; }
+.SubtitleArea .Tagline { font-family: 'Pacifico', cursive; color: var(--pink); font-size: 14px; text-transform: none; letter-spacing: 0; }
+
+/* Role tags */
+.RoleTags { padding: 12px 20px; background: var(--bg-sub); overflow: auto; }
+.RoleTags .Hint { font-size: 12px; color: var(--muted); }
+
+/* Footer */
+.Footer { padding: 12px 20px; background: linear-gradient(180deg, var(--bg), var(--bg-sub)); border-top: 1px solid #1a0f2a; display: flex; justify-content: space-between; align-items: center; }
+.Footer .Billing { font-size: 11px; color: var(--muted); letter-spacing: 1px; }
+.Footer .Seal { display: flex; align-items: center; gap: 8px; }
+.Footer .Seal .Text { font-family: 'Anton', sans-serif; color: var(--amber); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+.Footer .Seal .Gold { color: var(--amber); filter: drop-shadow(0 0 3px rgba(255,215,0,0.5)); }
+
+/* Layout buttons */
+.LayoutBtns { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.LayoutBtn { font-size: 11px; padding: 6px 10px; background: rgba(0,0,0,0.6); border: 1px solid var(--teal); color: var(--fg); text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border-radius: 4px; }
+
+/* Photo upload */
+.Upload { border: 2px dashed var(--teal); border-radius: 8px; padding: 20px; text-align: center; color: var(--muted); cursor: pointer; transition: background 0.2s; }
+.Upload:hover { background: rgba(0,212,170,0.1); }
+.Upload input { display: none; }
+
+/* Drag hint */
+.DragHint { margin-top: 8px; font-size: 12px; color: var(--muted); }
+
+/* Export */
+.ExportBtn { width: 100%; padding: 10px; background: var(--cyan); color: var(--bg); font-family: 'Anton', sans-serif; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; border: none; cursor: pointer; }
+.ExportBtn:hover { background: var(--neon-teal); }
+
+/* Share */
+.Share { font-size: 12px; color: var(--muted); margin-top: 8px; }
+.Share a { color: var(--cyan); text-decoration: underline; }
+
+/* Grade preview */
+.GradePeek { display: flex; gap: 4px; flex-wrap: wrap; }
+.GradePeek span { width: 24px; height: 24px; border-radius: 4px; border: 1px solid var(--muted); flex-shrink: 0; }
