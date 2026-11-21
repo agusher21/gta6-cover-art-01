@@ -54,7 +54,7 @@ function initStarterPanels() {
     if (i < 2) {
       const img = document.createElement('img');
       img.className = 'photo';
-      img.src = `app/samples/${starterFilenames[i]}`;
+      img.src = `samples/${starterFilenames[i]}`;
       img.alt = `Starter scene ${i}`;
       panel.appendChild(img);
     } else {
